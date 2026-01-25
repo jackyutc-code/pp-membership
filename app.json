@@ -14,13 +14,14 @@
       "**/*"
     ],
     "ios": {
-  "bundleIdentifier": "com.jackyu.pp",
-  "supportsTablet": true
-}
-
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jackyu.pp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
-      "package": "com.example.ppmembership"
+      "package": "com.jackyu.pp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
