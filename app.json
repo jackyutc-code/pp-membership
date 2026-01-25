@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "P&P Membership",
+    "slug": "pp-membership",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F9FAFB"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+  "bundleIdentifier": "com.jackyu.pp",
+  "supportsTablet": true
+}
+
+    },
+    "android": {
+      "package": "com.example.ppmembership"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0f510921-d9fe-4bef-b687-84fc61c5cf85"
+      }
+    }
+  }
+}
