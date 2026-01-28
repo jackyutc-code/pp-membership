@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Pressable, Image, SafeAreaView } from "react-native";
+import { View, Text, Pressable, Image, SafeAreaView, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SIGNUP_DATE_KEY = "pp_signup_date_v1";
@@ -55,10 +55,19 @@ export default function CardScreen({ navigation }) {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: THEME.bg }}>
-      <View style={{ flex: 1, padding: 24, paddingTop: 50 }}>
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{
+          paddingHorizontal: 24,
+          paddingTop: 18,
+          paddingBottom: 36, // important for small phones
+        }}
+        showsVerticalScrollIndicator={false}
+      >
         <Text style={{ fontSize: 28, fontWeight: "900", color: THEME.dark }}>
           Membership Card
         </Text>
+
         <Text style={{ marginTop: 6, fontSize: 14, color: THEME.muted }}>
           Show this screen to staff at participating locations.
         </Text>
@@ -116,6 +125,7 @@ export default function CardScreen({ navigation }) {
                 fontWeight: "900",
                 letterSpacing: 1.5,
                 color: THEME.primary,
+                textAlign: "center",
               }}
             >
               MEMBERS WELCOME
@@ -135,14 +145,18 @@ export default function CardScreen({ navigation }) {
 
             <View style={{ height: 16 }} />
 
-            <Text style={{ fontSize: 13, color: THEME.muted, fontWeight: "700" }}>Membership</Text>
+            <Text style={{ fontSize: 13, color: THEME.muted, fontWeight: "700" }}>
+              Membership
+            </Text>
             <Text style={{ fontSize: 18, color: THEME.dark, fontWeight: "900", marginTop: 4 }}>
               P&amp;P MEMBER
             </Text>
 
             <View style={{ height: 16 }} />
 
-            <Text style={{ fontSize: 13, color: THEME.muted, fontWeight: "700" }}>Expiration</Text>
+            <Text style={{ fontSize: 13, color: THEME.muted, fontWeight: "700" }}>
+              Expiration
+            </Text>
             <Text style={{ fontSize: 18, color: THEME.dark, fontWeight: "900", marginTop: 4 }}>
               {expirationDate || "—"}
             </Text>
@@ -211,7 +225,7 @@ export default function CardScreen({ navigation }) {
             Join / Enter Code
           </Text>
         </Pressable>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
