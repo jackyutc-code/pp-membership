@@ -58,16 +58,17 @@ export default function CardScreen({ navigation }) {
     <SafeAreaView style={{ flex: 1, backgroundColor: THEME.bg }}>
       <ScrollView
         style={{ flex: 1 }}
+        contentInsetAdjustmentBehavior="automatic"
+        showsVerticalScrollIndicator={false}
+        scrollEnabled={true}
+        bounces={true}
+        alwaysBounceVertical={true} // ✅ key for “scroll/bounce” even if content fits
         contentContainerStyle={{
-          flexGrow: 1, // ✅ critical: allows scroll even when content is "just a bit" taller
           paddingHorizontal: 24,
           paddingTop: 16,
-          paddingBottom: Math.max(insets.bottom, 18) + 24, // ✅ makes buttons reachable
+          paddingBottom: Math.max(insets.bottom, 18) + 24,
         }}
-        showsVerticalScrollIndicator={false}
-        alwaysBounceVertical={true}
       >
-        {/* Header */}
         <Text style={{ fontSize: 28, fontWeight: "900", color: THEME.dark }}>
           Membership Card
         </Text>
@@ -75,7 +76,6 @@ export default function CardScreen({ navigation }) {
           Show this screen to staff at participating locations.
         </Text>
 
-        {/* Card */}
         <View
           style={{
             marginTop: 18,
@@ -87,8 +87,9 @@ export default function CardScreen({ navigation }) {
             overflow: "hidden",
           }}
         >
-          {/* Watermark */}
+          {/* watermark (don’t capture touches) */}
           <Image
+            pointerEvents="none"
             source={require("../../assets/icon.png")}
             style={{
               position: "absolute",
@@ -102,9 +103,9 @@ export default function CardScreen({ navigation }) {
             resizeMode="contain"
           />
 
-          {/* Logo + headline */}
           <View style={{ alignItems: "center", marginTop: 6 }}>
             <Image
+              pointerEvents="none"
               source={require("../../assets/icon.png")}
               style={{
                 width: 88,
@@ -135,7 +136,6 @@ export default function CardScreen({ navigation }) {
             </Text>
           </View>
 
-          {/* Info */}
           <View style={{ marginTop: 18 }}>
             <Text style={{ fontSize: 13, color: THEME.muted, fontWeight: "700" }}>
               Name
@@ -194,7 +194,6 @@ export default function CardScreen({ navigation }) {
           </View>
         </View>
 
-        {/* Buttons (inside ScrollView so small phones can reach them) */}
         <Pressable
           onPress={() => navigation.navigate("Locations")}
           style={{
@@ -224,6 +223,8 @@ export default function CardScreen({ navigation }) {
             Join / Enter Code
           </Text>
         </Pressable>
+
+        <View style={{ height: 24 }} />
       </ScrollView>
     </SafeAreaView>
   );

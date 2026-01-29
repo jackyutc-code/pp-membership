@@ -16,7 +16,7 @@
     "ios": {
   "supportsTablet": true,
   "bundleIdentifier": "com.jackyu.pp",
-  "buildNumber": "17",
+  "buildNumber": "33",
   "infoPlist": {
     "ITSAppUsesNonExemptEncryption": false
   }
