@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, Pressable, Image, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, Pressable, Image, ScrollView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -25,14 +25,10 @@ function formatMMDDYYYY(date) {
 }
 
 export default function CardScreen({ navigation }) {
-  const [expirationDate, setExpirationDate] = useState("");
+  const [expirationDate, setExpirationDate] = useState("—");
   const [verifiedAt, setVerifiedAt] = useState(new Date());
 
   const memberName = "Jack Yu";
-
-  const refreshVerified = useCallback(() => {
-    setVerifiedAt(new Date());
-  }, []);
 
   useEffect(() => {
     (async () => {
@@ -47,77 +43,187 @@ export default function CardScreen({ navigation }) {
         exp.setFullYear(exp.getFullYear() + 1);
         setExpirationDate(formatMMDDYYYY(exp));
       } catch {
-        setExpirationDate("");
+        setExpirationDate("—");
       }
     })();
   }, []);
 
-  // Refresh “Verified” time when returning to this screen (no 1-second timer)
   useEffect(() => {
-    const unsub = navigation.addListener("focus", refreshVerified);
-    return unsub;
-  }, [navigation, refreshVerified]);
+    const t = setInterval(() => setVerifiedAt(new Date()), 1000);
+    return () => clearInterval(t);
+  }, []);
 
- return (
-  <SafeAreaView style={{ flex: 1, backgroundColor: THEME.bg }}>
-    <ScrollView
-      style={{ flex: 1 }}
-      contentContainerStyle={{
-        padding: 20,
-        paddingBottom: 40,
-      }}
-      showsVerticalScrollIndicator={true}
-    >
-
-      {/* CARD */}
-      <View
-        style={{
-          backgroundColor: THEME.card,
-          borderRadius: 20,
-          padding: 20,
-          marginBottom: 20,
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: THEME.bg }} edges={["top", "bottom"]}>
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingHorizontal: 24,
+          paddingTop: 18,
+          paddingBottom: 40, // extra space so bottom buttons are always reachable
         }}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        contentInsetAdjustmentBehavior={Platform.OS === "ios" ? "always" : undefined}
       >
-        <Text style={{ fontSize: 22, fontWeight: "900", color: THEME.dark }}>
+        {/* Header */}
+        <Text style={{ fontSize: 28, fontWeight: "900", color: THEME.dark }}>
           Membership Card
         </Text>
-
-        <Text style={{ marginTop: 8, color: THEME.muted }}>
-          Active member since {expirationDate || "—"}
+        <Text style={{ marginTop: 6, fontSize: 14, color: THEME.muted }}>
+          Show this screen to staff at participating locations.
         </Text>
-      </View>
 
-      {/* BUTTON: VIEW LOCATIONS */}
-      <Pressable
-        onPress={() => navigation.navigate("Locations")}
-        style={{
-          backgroundColor: THEME.primary,
-          borderRadius: 22,
-          paddingVertical: 16,
-          alignItems: "center",
-          marginBottom: 12,
-        }}
-      >
-        <Text style={{ color: "white", fontWeight: "900", fontSize: 16 }}>
-          View Locations
-        </Text>
-      </Pressable>
+        {/* Card */}
+        <View
+          style={{
+            marginTop: 18,
+            backgroundColor: THEME.card,
+            borderRadius: 26,
+            borderWidth: 1,
+            borderColor: THEME.border,
+            padding: 22,
+            overflow: "hidden",
+          }}
+        >
+          {/* watermark logo */}
+          <Image
+            source={require("../../assets/icon.png")}
+            style={{
+              position: "absolute",
+              right: -40,
+              top: 10,
+              width: 240,
+              height: 240,
+              opacity: 0.06,
+              transform: [{ rotate: "-12deg" }],
+            }}
+            resizeMode="contain"
+          />
 
-      {/* BUTTON: JOIN */}
-      <Pressable
-        onPress={() => navigation.navigate("Join")}
-        style={{
-          backgroundColor: THEME.dark,
-          borderRadius: 22,
-          paddingVertical: 16,
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ color: "white", fontWeight: "900", fontSize: 16 }}>
-          Join / Enter Code
-        </Text>
-      </Pressable>
+          {/* logo */}
+          <View style={{ alignItems: "center", marginTop: 6 }}>
+            <Image
+              source={require("../../assets/icon.png")}
+              style={{
+                width: 88,
+                height: 88,
+                borderRadius: 44,
+                marginBottom: 14,
+                borderWidth: 1,
+                borderColor: THEME.border,
+                backgroundColor: "white",
+              }}
+              resizeMode="contain"
+            />
 
-    </ScrollView>
-  </SafeAreaView>
-);
+            <Text
+              style={{
+                fontSize: 26,
+                fontWeight: "900",
+                letterSpacing: 1.5,
+                color: THEME.primary,
+                textAlign: "center",
+              }}
+            >
+              MEMBERS WELCOME
+            </Text>
+
+            <Text style={{ marginTop: 6, fontSize: 12, color: "#374151" }}>
+              — P&amp;P APP —
+            </Text>
+          </View>
+
+          {/* info */}
+          <View style={{ marginTop: 18 }}>
+            <Text style={{ fontSize: 13, color: THEME.muted, fontWeight: "700" }}>Name</Text>
+            <Text style={{ fontSize: 22, color: THEME.dark, fontWeight: "900", marginTop: 4 }}>
+              {memberName}
+            </Text>
+
+            <View style={{ height: 16 }} />
+
+            <Text style={{ fontSize: 13, color: THEME.muted, fontWeight: "700" }}>
+              Membership
+            </Text>
+            <Text style={{ fontSize: 18, color: THEME.dark, fontWeight: "900", marginTop: 4 }}>
+              P&amp;P MEMBER
+            </Text>
+
+            <View style={{ height: 16 }} />
+
+            <Text style={{ fontSize: 13, color: THEME.muted, fontWeight: "700" }}>
+              Expiration
+            </Text>
+            <Text style={{ fontSize: 18, color: THEME.dark, fontWeight: "900", marginTop: 4 }}>
+              {expirationDate}
+            </Text>
+
+            <View style={{ height: 16 }} />
+
+            <Text style={{ fontSize: 13, color: THEME.muted, fontWeight: "700" }}>Status</Text>
+            <View
+              style={{
+                alignSelf: "flex-start",
+                marginTop: 8,
+                backgroundColor: THEME.badgeBg,
+                borderRadius: 999,
+                paddingVertical: 8,
+                paddingHorizontal: 14,
+                borderWidth: 1,
+                borderColor: THEME.badgeBorder,
+              }}
+            >
+              <Text style={{ color: THEME.badgeText, fontWeight: "900", letterSpacing: 0.5 }}>
+                ACTIVE
+              </Text>
+            </View>
+
+            <Text style={{ marginTop: 12, fontSize: 12, color: THEME.muted }}>
+              Verified: {verifiedAt.toLocaleTimeString()}
+            </Text>
+
+            <Text style={{ marginTop: 10, fontSize: 12, color: THEME.muted, lineHeight: 16 }}>
+              Staff: Active memberships show a green status and expiration date.
+            </Text>
+          </View>
+        </View>
+
+        {/* Buttons */}
+        <Pressable
+          onPress={() => navigation.navigate("Locations")}
+          style={{
+            marginTop: 22,
+            backgroundColor: THEME.primary,
+            borderRadius: 22,
+            paddingVertical: 18,
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "white", fontWeight: "900", fontSize: 16 }}>
+            View Locations
+          </Text>
+        </Pressable>
+
+        <Pressable
+          onPress={() => navigation.navigate("Join")}
+          style={{
+            marginTop: 12,
+            backgroundColor: THEME.dark,
+            borderRadius: 22,
+            paddingVertical: 16,
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ color: "white", fontWeight: "900", fontSize: 16 }}>
+            Join / Enter Code
+          </Text>
+        </Pressable>
+
+        {/* Safety spacer for iPhones with small screens / home indicator */}
+        <View style={{ height: 24 }} />
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
