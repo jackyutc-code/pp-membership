@@ -5,16 +5,17 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const STORAGE_KEY = "pp_locations_v1";
 
 const DEFAULT_LOCATIONS = [
+  // Original 3
   { id: "a", name: "Coffee Shop A", address: "123 Main St", city: "Los Angeles", state: "CA", restrooms: 1 },
   { id: "b", name: "Restaurant B", address: "88 Market Ave", city: "Pasadena", state: "CA", restrooms: 2 },
   { id: "c", name: "Library C", address: "10 Park Blvd", city: "Santa Monica", state: "CA", restrooms: 4 },
 
-  // 🇺🇸 US test locations
+  // US testing
   { id: "arc-1", name: "Arcadia Coffee House", address: "888 Baldwin Ave", city: "Arcadia", state: "CA", restrooms: 2 },
   { id: "sj-1", name: "San Jose Downtown Café", address: "101 Market St", city: "San Jose", state: "CA", restrooms: 3 },
   { id: "rh-1", name: "Rowland Heights Tea & Coffee", address: "18888 Colima Rd", city: "Rowland Heights", state: "CA", restrooms: 2 },
 
-  // 🇨🇳 Shanghai test locations
+  // Shanghai testing (4)
   { id: "sh-1", name: "Bund Riverside Café", address: "18 Zhongshan East Rd", city: "Shanghai", state: "China", restrooms: 3 },
   { id: "sh-2", name: "Xintiandi Coffee Lab", address: "245 Madang Rd", city: "Shanghai", state: "China", restrooms: 2 },
   { id: "sh-3", name: "Lujiazui Finance Café", address: "100 Century Ave", city: "Shanghai", state: "China", restrooms: 4 },
@@ -43,6 +44,7 @@ export default function LocationsScreen({ navigation }) {
           if (Array.isArray(saved)) setLocations(saved);
         } else {
           await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_LOCATIONS));
+          setLocations(DEFAULT_LOCATIONS);
         }
       } catch (e) {}
     })();
@@ -56,7 +58,6 @@ export default function LocationsScreen({ navigation }) {
         if (Array.isArray(saved)) setLocations(saved);
       } catch (e) {}
     });
-
     return unsubscribe;
   }, [navigation]);
 
@@ -97,7 +98,7 @@ export default function LocationsScreen({ navigation }) {
           Locations may refuse service at their discretion.
         </Text>
 
-        {/* Search bar */}
+        {/* Search */}
         <View
           style={{
             marginTop: 14,
@@ -109,10 +110,9 @@ export default function LocationsScreen({ navigation }) {
             paddingVertical: 10,
             flexDirection: "row",
             alignItems: "center",
-            gap: 10,
           }}
         >
-          <Text style={{ fontSize: 16 }}>🔎</Text>
+          <Text style={{ fontSize: 16, marginRight: 10 }}>🔎</Text>
 
           <TextInput
             value={query}
@@ -132,6 +132,7 @@ export default function LocationsScreen({ navigation }) {
                 borderRadius: 999,
                 paddingHorizontal: 10,
                 paddingVertical: 6,
+                marginLeft: 10,
               }}
             >
               <Text style={{ color: "white", fontWeight: "900" }}>X</Text>
@@ -139,8 +140,8 @@ export default function LocationsScreen({ navigation }) {
           )}
         </View>
 
-        {/* Action buttons */}
-        <View style={{ flexDirection: "row", gap: 10, marginTop: 14 }}>
+        {/* Buttons */}
+        <View style={{ flexDirection: "row", marginTop: 14 }}>
           <Pressable
             onPress={() => navigation.navigate("AdminAddLocation")}
             style={{
@@ -149,10 +150,7 @@ export default function LocationsScreen({ navigation }) {
               borderRadius: 16,
               paddingVertical: 14,
               alignItems: "center",
-              shadowColor: "#000",
-              shadowOpacity: 0.08,
-              shadowRadius: 8,
-              shadowOffset: { width: 0, height: 4 },
+              marginRight: 10,
             }}
           >
             <Text style={{ color: "white", fontWeight: "900" }}>+ Add</Text>
@@ -172,13 +170,12 @@ export default function LocationsScreen({ navigation }) {
           </Pressable>
         </View>
 
-        {/* Results count */}
         <Text style={{ marginTop: 14, fontSize: 13, color: THEME.muted }}>
           Showing {filtered.length} of {locations.length}
         </Text>
 
-        {/* Location list */}
-        <View style={{ marginTop: 12, gap: 14 }}>
+        {/* List */}
+        <View style={{ marginTop: 12 }}>
           {filtered.map((loc) => (
             <Pressable
               key={loc.id}
@@ -197,20 +194,15 @@ export default function LocationsScreen({ navigation }) {
                 padding: 18,
                 borderWidth: 1,
                 borderColor: THEME.border,
-                shadowColor: "#000",
-                shadowOpacity: 0.05,
-                shadowRadius: 10,
-                shadowOffset: { width: 0, height: 6 },
+                marginBottom: 14,
               }}
             >
               <Text style={{ fontSize: 18, fontWeight: "900", color: THEME.dark }}>
                 {loc.name}
               </Text>
-
               <Text style={{ marginTop: 6, fontSize: 15, color: THEME.muted }}>
                 {loc.address}
               </Text>
-
               <Text style={{ marginTop: 4, fontSize: 13, color: THEME.muted }}>
                 {loc.city}, {loc.state} · 🚻 {loc.restrooms}
               </Text>
@@ -218,11 +210,10 @@ export default function LocationsScreen({ navigation }) {
           ))}
         </View>
 
-        {/* Back */}
         <Pressable
           onPress={() => navigation.navigate("Card")}
           style={{
-            marginTop: 22,
+            marginTop: 8,
             backgroundColor: THEME.dark,
             borderRadius: 18,
             paddingVertical: 16,
