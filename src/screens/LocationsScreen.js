@@ -8,6 +8,14 @@ const DEFAULT_LOCATIONS = [
   { id: "a", name: "Coffee Shop A", address: "123 Main St", city: "Los Angeles", state: "CA", restrooms: 1 },
   { id: "b", name: "Restaurant B", address: "88 Market Ave", city: "Pasadena", state: "CA", restrooms: 2 },
   { id: "c", name: "Library C", address: "10 Park Blvd", city: "Santa Monica", state: "CA", restrooms: 4 },
+
+  // ✅ Added test locations (US)
+  { id: "arc-1", name: "Arcadia Coffee House", address: "100 W Huntington Dr", city: "Arcadia", state: "CA", restrooms: 2 },
+  { id: "sj-1", name: "San Jose Downtown Café", address: "1 S Market St", city: "San Jose", state: "CA", restrooms: 3 },
+  { id: "rh-1", name: "Rowland Heights Tea & Coffee", address: "17120 Colima Rd", city: "Rowland Heights", state: "CA", restrooms: 1 },
+
+  // ✅ Added foreign test location
+  { id: "sh-1", name: "Shanghai Central Café", address: "1 Nanjing Rd", city: "Shanghai", state: "China", restrooms: 6 },
 ];
 
 const THEME = {
