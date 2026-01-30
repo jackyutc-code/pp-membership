@@ -9,13 +9,16 @@ const DEFAULT_LOCATIONS = [
   { id: "b", name: "Restaurant B", address: "88 Market Ave", city: "Pasadena", state: "CA", restrooms: 2 },
   { id: "c", name: "Library C", address: "10 Park Blvd", city: "Santa Monica", state: "CA", restrooms: 4 },
 
-  // ✅ Added test locations (US)
-  { id: "arc-1", name: "Arcadia Coffee House", address: "100 W Huntington Dr", city: "Arcadia", state: "CA", restrooms: 2 },
-  { id: "sj-1", name: "San Jose Downtown Café", address: "1 S Market St", city: "San Jose", state: "CA", restrooms: 3 },
-  { id: "rh-1", name: "Rowland Heights Tea & Coffee", address: "17120 Colima Rd", city: "Rowland Heights", state: "CA", restrooms: 1 },
+  // 🇺🇸 US test locations
+  { id: "arc-1", name: "Arcadia Coffee House", address: "888 Baldwin Ave", city: "Arcadia", state: "CA", restrooms: 2 },
+  { id: "sj-1", name: "San Jose Downtown Café", address: "101 Market St", city: "San Jose", state: "CA", restrooms: 3 },
+  { id: "rh-1", name: "Rowland Heights Tea & Coffee", address: "18888 Colima Rd", city: "Rowland Heights", state: "CA", restrooms: 2 },
 
-  // ✅ Added foreign test location
-  { id: "sh-1", name: "Shanghai Central Café", address: "1 Nanjing Rd", city: "Shanghai", state: "China", restrooms: 6 },
+  // 🇨🇳 Shanghai test locations
+  { id: "sh-1", name: "Bund Riverside Café", address: "18 Zhongshan East Rd", city: "Shanghai", state: "China", restrooms: 3 },
+  { id: "sh-2", name: "Xintiandi Coffee Lab", address: "245 Madang Rd", city: "Shanghai", state: "China", restrooms: 2 },
+  { id: "sh-3", name: "Lujiazui Finance Café", address: "100 Century Ave", city: "Shanghai", state: "China", restrooms: 4 },
+  { id: "sh-4", name: "Jing’an Urban Brew", address: "699 Nanjing West Rd", city: "Shanghai", state: "China", restrooms: 2 },
 ];
 
 const THEME = {
